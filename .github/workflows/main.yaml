@@ -1,0 +1,82 @@
+name: ci
+
+on:
+  pull_request:
+    branches:
+      - master
+
+env:
+  AWS_DEFAULT_REGION: us-west-2
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  module:
+    name: module validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup
+        uses: hashicorp/setup-terraform@v1
+
+      - name: init
+        run: terraform init
+
+      - name: validate
+        run: terraform validate
+
+      - name: fmt
+        run: terraform fmt -check
+
+  minimum:
+    name: minimum example validation
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: examples/minimum
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup
+        uses: hashicorp/setup-terraform@v1
+
+      - name: init
+        run: terraform init
+
+      - name: validate
+        run: terraform validate
+
+      - name: fmt
+        run: terraform fmt -check
+
+  full:
+    name: full example validation
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: examples/full
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup
+        uses: hashicorp/setup-terraform@v1
+
+      - name: init
+        run: terraform init
+
+      - name: validate
+        run: terraform validate
+
+      - name: fmt
+        run: terraform fmt -check
