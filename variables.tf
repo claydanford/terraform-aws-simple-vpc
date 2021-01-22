@@ -7,7 +7,7 @@ variable "application" {
 variable "az_filter" {
   description = "AZ's to filter out of making subnets."
   type        = list(string)
-  default     = null
+  default     = []
 }
 
 variable "cidr_block" {
