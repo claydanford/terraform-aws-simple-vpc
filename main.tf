@@ -7,7 +7,15 @@ locals {
   }
 }
 
-data "aws_availability_zones" "this" {}
+data "aws_availability_zones" "this" {
+  dynamic "filter" {
+    for_each = var.az_filter == null ? [] : [1]
+    content {
+      name   = "zone-name"
+      values = var.az_filter
+    }
+  }
+}
 
 resource "aws_vpc" "this" {
   cidr_block           = var.cidr_block

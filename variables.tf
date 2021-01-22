@@ -4,6 +4,12 @@ variable "application" {
   default     = "foo"
 }
 
+variable "az_filter" {
+  description = "AZ's to filter out of making subnets."
+  type        = list(string)
+  default     = null
+}
+
 variable "cidr_block" {
   description = "The CIDR block for the VPC."
   type        = string
